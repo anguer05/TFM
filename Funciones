@@ -189,5 +189,106 @@ cruzadaavnnetbin<-function(data=data,vardep="vardep",
  }
 **********************************************************************************************************
 **********************************************************************************************************
-***************************************** CRUZADA avNNet *************************************************
-
+***************************************** RANDOM FOREST  *************************************************
+cruzadarfbin<-
+ function(data=data,vardep="vardep",
+  listconti="listconti",
+  listclass="listclass",
+  grupos=4,sinicio=23461,repe=10,nodesize=20,
+  mtry=2,ntree=50,replace=TRUE,sampsize=400)
+ { 
+  
+  # PreparaciÃ³n del archivo
+  
+  # b)pasar las categÃ³ricas a dummies
+  
+  if  (listclass!=c(""))
+  {
+   databis<-data[,c(vardep,listconti,listclass)]
+   databis<- dummy.data.frame(databis, listclass, sep = ".")
+   }  
+   else   {  
+  databis<-data[,c(vardep,listconti)]
+   }
+  
+  # c)estandarizar las variables continuas
+  
+  # Calculo medias y dtipica de datos y estandarizo (solo las continuas)
+  
+  means <-apply(data[,listconti],2,mean)
+  sds<-sapply(data[,listconti],sd)
+  
+  # Estandarizo solo las continuas y uno con las categoricas
+  
+  datacon<-scale(data[,listconti], center = means, scale = sds)
+  numerocont<-which(colnames(data)%in%listconti)
+  databis<-cbind(datacon,data[,-numerocont,drop=FALSE ])
+  
+  databis[,vardep]<-as.factor(databis[,vardep])
+  
+  formu<-formula(paste("factor(",vardep,")~.",sep=""))
+  
+  # Preparo caret   
+  
+  set.seed(sinicio)
+  control<-trainControl(method = "repeatedcv",number=grupos,repeats=repe,
+   savePredictions = "all",classProbs=TRUE) 
+  
+  # Aplico caret y construyo modelo
+  
+  rfgrid <-expand.grid(mtry=mtry)
+  
+  rf<- train(formu,data=databis,
+   method="rf",trControl=control,
+   tuneGrid=rfgrid,nodesize=nodesize,replace=replace,
+   ntree=ntree,sampsize=sampsize)
+  
+  print(rf$results)
+  
+  preditest<-rf$pred
+  
+  preditest$prueba<-strsplit(preditest$Resample,"[.]")
+  preditest$Fold <- sapply(preditest$prueba, "[", 1)
+  preditest$Rep <- sapply(preditest$prueba, "[", 2)
+  preditest$prueba<-NULL
+  
+  tasafallos<-function(x,y) {
+   confu<-confusionMatrix(x,y)
+   tasa<-confu[[3]][1]
+   return(tasa)
+  }
+  
+  # Aplicamos funciÃ³n sobre cada RepeticiÃ³n
+  
+  t_forest<-preditest %>%
+   group_by(Rep) %>%
+   summarize(tasa=1-tasafallos(pred,obs))
+  
+  # CalculamoS AUC  por cada RepeticiÃ³n de cv 
+  # Definimnos funciÃ³n
+  
+  auc<-function(x,y) {
+   curvaroc<-roc(response=x,predictor=y)
+   auc<-curvaroc$auc
+   return(auc)
+  }
+  
+  # Aplicamos funciÃ³n sobre cada RepeticiÃ³n
+  
+  forestbis<-preditest %>%
+   group_by(Rep) %>%
+   summarize(auc=auc(obs,Yes))
+  
+  # Unimos la info de auc y de tasafallos
+  
+  t_forest$auc<-forestbis$auc
+  
+  return(t_forest)
+  
+ }
+ ******************************************************************************************************************
+ 
+ 
+ 
+ 
+ 
