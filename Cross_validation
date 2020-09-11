@@ -622,6 +622,112 @@ par(cex.axis=0.8)
 boxplot(data=t_gbm,tasa~modelo,main="TASA FALLOS",col="blue")
 boxplot(data=t_gbm,auc~modelo,main="AUC")
 
+******************************************************************************************************************************************
+**************************************************************  XG BOOSTING  *************************************************************
+
+
+xboost1<-cruzadaxgbmbin(data=senbis, vardep="gana",
+                        listconti=c("P33","P32","P7","P5","P1","P11","P6","P3","P30","P31","P4","P8","P12"),
+                        listclass=c("C29","C17","C22","C20","C16","C18"),
+                        grupos=5,sinicio=2345,repe=10,
+                        min_child_weight=5,eta=0.01,nrounds=200,max_depth=6,
+                        gamma=0,colsample_bytree=1,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+
+xboost1$modelo="xgbm_1"
+
+# Imitación parámetros gbm
+xboost2<-cruzadaxgbmbin(data=senbis, vardep="gana",
+                        listconti=c("P33","P32","P7","P5","P1","P11","P6","P3","P30","P31","P4","P8","P12"),
+                        listclass=c("C29","C17","C22","C20","C16","C18"),
+                        grupos=5,sinicio=2345,repe=10,
+                        min_child_weight=5,eta=0.001,nrounds=5000,max_depth=6,
+                        gamma=0,colsample_bytree=1,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+
+xboost2$modelo="xgbm_2"
+
+# La funciÃ³n cruzadagbmbin permite plantear gradient boosting para binarias 
+
+xboost3<-cruzadaxgbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P33","P32","P7","P5","P1","P11","P6","P3","P30","P31","P4","P8","P12","P9"),
+                        listclass=c(""),
+                        grupos=4,sinicio=2345,repe=5,
+                        min_child_weight=5,eta=0.001,nrounds=5000,max_depth=6,
+                        gamma=0,colsample_bytree=1,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+xboost3$modelo="xgbm_3"
+
+# Imitación parámetros gbm
+xboost4<-cruzadaxgbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P33","P32","P7","P5","P1","P11","P6","P3","P30","P31","P4","P8","P12","P9"),
+                        listclass=c(""),
+                        grupos=4,sinicio=2345,repe=5,
+                        min_child_weight=10,eta=0.001,nrounds=1000,max_depth=6,
+                        gamma=0,colsample_bytree=1,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+
+xboost4$modelo="xgbm_4"
+
+t_xboost<-rbind(xboost1,xboost2,xboost3,xboost4)
+
+par(cex.axis=1.25,cex=1)
+boxplot(data=t_xboost,tasa~modelo,main="TASA FALLOS",col="pink")
+boxplot(data=t_xboost,auc~modelo,main="AUC")
+
+# PARA REDUCIR LA VARIANZA SE PUEDE RECURRIR A SORTEAR VARIABLES
+# (ESTILO RANDOMFOREST PERO ANTES DEL ARBOL) Y/O
+# A SORTEAR OBSERVACIONES (BAGGING)
+# EN AMBOS CASOS HAY QUE AUMENTAR EL NÃMERO DE ÃRBOLES
+
+xboost5<-cruzadaxgbmbin(data=senbis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                        listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                        grupos=5,sinicio=1234,repe=10,
+                        min_child_weight=5,eta=0.01,nrounds=200,max_depth=6,
+                        gamma=0,colsample_bytree=0.8,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+
+xboost5$modelo="xgbmvar5"
+
+xboost6<-cruzadaxgbmbin(data=senbis, vardep="gana",
+                        listconti=c("P33","P32","P7","P5","P1","P11","P6","P3","P30","P31","P4","P8","P12"),
+                        listclass=c("C29","C17","C22","C20","C16","C18"),
+                        grupos=5,sinicio=2345,repe=10,
+                        min_child_weight=5,eta=0.01,nrounds=200,max_depth=3,
+                        gamma=0,colsample_bytree=0.8,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+
+xboost6$modelo="xgbmvar6"
+
+xboost7<-cruzadaxgbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=2345,repe=10,
+                        min_child_weight=5,eta=0.01,nrounds=200,max_depth=6,
+                        gamma=0,colsample_bytree=0.8,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+
+xboost7$modelo="xgbmvar7"
+
+xboost8<-cruzadaxgbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P33","P32","P7","P5","P1","P11","P6","P3","P30","P31","P4","P8","P12","P9"),
+                        listclass=c(""),
+                        grupos=5,sinicio=2345,repe=10,
+                        min_child_weight=5,eta=0.01,nrounds=200,max_depth=3,
+                        gamma=0,colsample_bytree=0.8,subsample=1,
+                        alpha=0,lambda=0,lambda_bias=0)
+xboost8$modelo="xgbmvar8"
+
+
+xboost<-rbind(xboost1,xboost2,xboost3,xboost4,xboost5,xboost6,xboost7,xboost8)
+
+
+xboost<-rbind(xboost5,xboost6,xboost7,xboost8)
+
+par(cex.axis=1.25,cex=1)
+boxplot(data=xboost,tasa~modelo,main="TASA FALLOS",col="pink")
+boxplot(data=xboost,auc~modelo,main="AUC")
 
 
 
