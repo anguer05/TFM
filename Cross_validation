@@ -345,5 +345,283 @@ rlog6$modelo="Log6"
   boxplot(data=unionred,tasa~modelo,main="TASA FALLOS")
   boxplot(data=unionred,auc~modelo,main="AUC") 
 
-*******************************************************************************************************************************
+**************************************************************************************************************************************
+*********************************************************** RANDOM FOREST  ***********************************************************
+t_forest1<-cruzadarfbin(data=senbis, vardep="gana",
+                      listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                      listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                      grupos=4,sinicio=23461,repe=10,nodesize=20,
+                      mtry=32,ntree=500,replace=TRUE,sampsize=200)
+
+t_forest1$modelo="bagging_1"
+
+t_forest2<-cruzadarfbin(data=senbis, vardep="gana",
+                      listconti=c("P30","P31","P32","P33"),
+                      listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                      grupos=4,sinicio=23461,repe=10,nodesize=20,
+                      mtry=19,ntree=500,replace=TRUE,sampsize=200)
+
+t_forest2$modelo="bagging_2"
+
+t_forest3<-cruzadarfbin(data=senbis, vardep="gana",
+                      listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                      listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                      grupos=5,sinicio=23461,repe=10,nodesize=10,
+                      mtry=32,ntree=500,replace=TRUE,sampsize=300)
+
+t_forest3$modelo="bagging_3"
+
+t_forest4<-cruzadarfbin(data=senbis, vardep="gana",
+                      listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                      listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                      grupos=5,sinicio=23461,repe=10,nodesize=5,
+                      mtry=32,ntree=500,replace=TRUE,sampsize=200)
+
+t_forest4$modelo="bagging_4"
+
+t_forest5<-cruzadarfbin(data=senbis, vardep="gana",
+                      listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                      listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                      grupos=4,sinicio=23461,repe=10,nodesize=20,
+                      mtry=32,ntree=500,replace=TRUE,sampsize=400)
+
+t_forest5$modelo="bagging_5"
+
+t_forest6<-cruzadarfbin(data=senbis, vardep="gana",
+                      listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                      listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                      grupos=4,sinicio=23461,repe=10,nodesize=10,
+                      mtry=32,ntree=500,replace=TRUE,sampsize=400)
+
+t_forest6$modelo="bagging_6"
+
+t_forest7<-cruzadarfbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=4,sinicio=23461,repe=10,nodesize=5,
+                        mtry=15,ntree=500,replace=TRUE,sampsize=200)
+
+t_forest7$modelo="bagging_7"
+
+t_forest8<-cruzadarfbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=4,sinicio=23461,repe=10,nodesize=15,
+                        mtry=15,ntree=500,replace=TRUE,sampsize=200)
+t_forest8$modelo="bagging_8"
+
+t_forest9<-cruzadarfbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=4,sinicio=23461,repe=10,nodesize=10,
+                        mtry=15,ntree=500,replace=TRUE,sampsize=300)
+t_forest9$modelo="bagging_9"
+
+t_forest10<-cruzadarfbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        #listclass=c(""),
+                        grupos=4,sinicio=23461,repe=10,nodesize=20,
+                        mtry=15,ntree=500,replace=TRUE,sampsize=400)
+t_forest10$modelo="bagging_10"
+
+t_bag<-rbind(t_forest1,t_forest2,t_forest3,t_forest4,t_forest5,t_forest6,t_forest7,t_forest8,t_forest9,t_forest10)
+
+par(cex.axis=1.0)
+boxplot(data=t_bag,tasa~modelo,main="TASA FALLOS",col="pink")
+boxplot(data=t_bag,auc~modelo,main="AUC")
+
+#No he guardado en memorias dejando solo las transformadas
+
+# RandomForest
+
+t_forest11<-cruzadarfbin(data=senbis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                        listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                        grupos=4,sinicio=23461,repe=10,nodesize=20,
+                        mtry=7,ntree=500,replace=TRUE,sampsize=400)
+
+t_forest11$modelo="Forest_1"
+
+t_forest12<-cruzadarfbin(data=senbis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                         listclass=c("C13","C14","C16","C18","C20","C21","C24","C25","C27","C28","C29"),
+                         grupos=4,sinicio=23461,repe=10,nodesize=10,
+                         mtry=21,ntree=500,replace=TRUE,sampsize=300)
+
+t_forest12$modelo="Forest_2"
+
+t_forest13<-cruzadarfbin(data=senbis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                         listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                         grupos=4,sinicio=23461,repe=10,nodesize=10,
+                         mtry=29,ntree=500,replace=TRUE,sampsize=300)
+
+t_forest13$modelo="Forest_3"
+
+t_forest14<-cruzadarfbin(data=senbis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                         listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                         grupos=4,sinicio=23461,repe=10,nodesize=10,
+                         mtry=11,ntree=500,replace=TRUE,sampsize=300)
+
+t_forest14$modelo="Forest_4"
+
+t_forest15<-cruzadarfbin(data=senbis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                         listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                         grupos=5,sinicio=23461,repe=10,nodesize=20,
+                         mtry=11,ntree=500,replace=TRUE,sampsize=200)
+
+t_forest15$modelo="Forest_5"
+
+t_forest16<-cruzadarfbin(data=sen1bis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                         listclass=c(""),
+                         grupos=4,sinicio=23461,repe=10,nodesize=10,
+                         mtry=12,ntree=500,replace=TRUE,sampsize=300)
+t_forest16$modelo="Forest_6"
+
+t_forest17<-cruzadarfbin(data=sen1bis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                         listclass=c(""),
+                         grupos=4,sinicio=23461,repe=10,nodesize=10,
+                         mtry=9,ntree=500,replace=TRUE,sampsize=300)
+t_forest17$modelo="Forest_7"
+
+t_forest18<-cruzadarfbin(data=sen1bis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                         listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10,nodesize=15,
+                         mtry=4,ntree=500,replace=TRUE,sampsize=200)
+t_forest18$modelo="Forest_8"#8   400
+
+t_forest19<-cruzadarfbin(data=sen1bis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                         listclass=c(""),
+                         grupos=4,sinicio=23461,repe=10,nodesize=15,
+                         mtry=11,ntree=500,replace=TRUE,sampsize=400)
+t_forest19$modelo="Forest_9"
+
+
+t_forest15<-cruzadarfbin(data=senbis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                         listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                         grupos=5,sinicio=23461,repe=10,nodesize=20,
+                         mtry=11,ntree=500,replace=TRUE,sampsize=200)
+
+t_forest15$modelo="Forest_5"
+
+t_forest18<-cruzadarfbin(data=sen1bis, vardep="gana",
+                         listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                         listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10,nodesize=15,
+                         mtry=4,ntree=500,replace=TRUE,sampsize=200)
+t_forest18$modelo="Forest_8"
+
+t_forest20<-cruzadarfbin(data=sen1bis, vardep="gana",
+                         listconti=c("P1","P3","P4","P6","P8","P9","P11","P30","P31","P32","P33"),
+                         listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10,nodesize=15,
+                         mtry=4,ntree=500,replace=TRUE,sampsize=200)
+t_forest20$modelo="Forest_10"
+
+t_rforest<-rbind(t_forest11,t_forest12,t_forest13,t_forest14,t_forest15,t_forest16,t_forest17,t_forest18,t_forest19,t_forest20)
+
+
+par(cex.axis=1.0)
+boxplot(data=t_rforest,tasa~modelo,main="TASA FALLOS",col="pink")
+boxplot(data=t_rforest,auc~modelo,main="AUC")
+
+******************************************************************************************************************************************
+*********************************************************** GRADIENT BOOSTING  ***********************************************************
+
+t_boost1<-cruzadagbmbin(data=senbis, vardep="gana",
+                       listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                       listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                       grupos=5,sinicio=23461,repe=10,
+                     n.minobsinnode=30,shrinkage=0.001,n.trees=8000,interaction.depth=2)
+
+t_boost1$modelo="gbm_1" 
+
+t_boost2<-cruzadagbmbin(data=senbis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P11","P12","P30","P31","P32","P33"),
+                        listclass=c("C14","C22","C24","C27","C28","C29"),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=30,shrinkage=0.001,n.trees=8000,interaction.depth=2)
+
+t_boost2$modelo="gbm_2" 
+
+t_boost3<-cruzadagbmbin(data=senbis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                        listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=30,shrinkage=0.001,n.trees=10000,interaction.depth=2)
+
+t_boost3$modelo="gbm_3" 
+
+t_boost4<-cruzadagbmbin(data=senbis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P11","P12","P30","P31","P32","P33"),
+                        listclass=c("C14","C22","C24","C27","C28","C29"),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=30,shrinkage=0.001,n.trees=10000,interaction.depth=2)
+
+t_boost4$modelo="gbm_4" 
+
+t_boost5<-cruzadagbmbin(data=senbis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P19","P26","P30","P31","P32","P33"),
+                        listclass=c("C13","C14","C15","C16","C17","C18","C20","C21","C22","C23","C24","C25","C27","C28","C29"),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=40,shrinkage=0.001,n.trees=8000,interaction.depth=2)
+
+t_boost5$modelo="gbm_5" 
+
+t_boost6<-cruzadagbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=20,shrinkage=0.001,n.trees=5000,interaction.depth=2)
+
+t_boost6$modelo="gbm_6" 
+
+t_boost7<-cruzadagbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=30,shrinkage=0.001,n.trees=5000,interaction.depth=2)
+
+t_boost7$modelo="gbm_7" 
+
+t_boost8<-cruzadagbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P9","P10","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=30,shrinkage=0.001,n.trees=5000,interaction.depth=2)
+
+t_boost8$modelo="gbm_8" 
+
+t_boost9<-cruzadagbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=30,shrinkage=0.001,n.trees=5000,interaction.depth=2)
+
+t_boost9$modelo="gbm_9" 
+
+t_boost0<-cruzadagbmbin(data=sen1bis, vardep="gana",
+                        listconti=c("P1","P3","P4","P5","P6","P7","P8","P11","P12","P30","P31","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,
+                        n.minobsinnode=30,shrinkage=0.001,n.trees=8000,interaction.depth=2)
+
+t_boost0$modelo="gbm_0" 
+
+
+t_gbm<-rbind(t_boost0,t_boost1,t_boost2,t_boost3,t_boost4,t_boost5,t_boost6,t_boost7,t_boost8,t_boost9)
+
+par(cex.axis=0.8)
+boxplot(data=t_gbm,tasa~modelo,main="TASA FALLOS",col="blue")
+boxplot(data=t_gbm,auc~modelo,main="AUC")
+
+
+
 
