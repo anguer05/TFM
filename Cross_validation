@@ -1,0 +1,349 @@
+ *******************************************************************************************************
+ ************************************** REG LOGÍSTICA **************************************************
+ rlog1<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C21","C24","C27"),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+rlog1$modelo="Log1"
+ 
+ rlog2<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P32","P30","P33"),
+                         listclass=c("C28","C25"),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+rlog2$modelo="Log2"
+ 
+ rlog3<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C27","C29"),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+rlog3$modelo="Log3"   
+
+ rlog4<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                            listclass=c("C17","C21","C29"),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+rlog4$modelo="Log4"   
+ 
+ rlog5<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                            listclass=c("C25","C28"),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+rlog5$modelo="Log5"
+ 
+ rlog6<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P33","P32"),
+                            listclass=c("C25","C28","C27"),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+rlog6$modelo="Log6"   
+ 
+ rlog7<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P10","P12","P30","P32","P33"),
+                            listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+ rlog7$modelo="Log7"
+
+ rlog8<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P3","P9","P12","P30","P32","P33"),
+                            listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+ rlog8$modelo="Log8"   
+ 
+ rlog9<-cruzadalogistica(data=senbis,vardep="gana",
+                         listconti=c("P5","P12","P30","P32","P33"),
+                            listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10)
+ 
+ rlog9$modelo="Log9"   
+ 
+ rlog10<-cruzadalogistica(data=senbis,vardep="gana",
+                          listconti=c("P6","P7","P8","P12","P30","P32","P33"),
+                            listclass=c("C24","C17","C29","C25"),
+                          grupos=5,sinicio=23461,repe=10)
+ 
+ rlog10$modelo="Log10"
+ 
+ medias1<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P30","P32","P33"),
+                           listclass=c("C27"),
+                           grupos=5,sinicio=1234,repe=5)
+ # 
+ medias1$modelo="Log11"
+ 
+ medias2<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P8","P30","P32","P33"),
+                           listclass=c(""),
+                           grupos=5,sinicio=1234,repe=5)
+ 
+ medias2$modelo="Log12"
+ 
+ 
+ medias3<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P30","P32","P33"),
+                           listclass=c("C25","C27","C29"),
+                           grupos=5,sinicio=1234,repe=5)
+ medias3$modelo="Log13"
+ 
+ medias4<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P4","P5","P8","P11","P12","P30","P31","P32","P33"),
+                           listclass=c(""),
+                           grupos=5,sinicio=1234,repe=5)
+ medias4$modelo="Log14"
+ 
+ medias5<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P30","P32","P33","P31"),
+                           listclass=c("C16","C17","C28","C25","C27"),
+                           grupos=5,sinicio=1234,repe=5)
+ medias5$modelo="Log15"
+ 
+ medias6<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P30","P31","P32","P33"),
+                           listclass=c("C17","C28"),
+                           grupos=5,sinicio=1234,repe=5)
+ medias6$modelo="Log16"
+ 
+ medias7<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P8","P9","P30","P32","P33"),
+                           listclass=c(""),
+                           grupos=5,sinicio=1234,repe=5)
+ medias7$modelo="Log17"
+ 
+ medias8<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P30","P32","P33"),
+                           listclass=c("C16","C17","C28","C27"),
+                           grupos=5,sinicio=1234,repe=5)
+ medias8$modelo="Log18"
+ 
+ medias9<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P19","P30","P32","P33"),
+                           listclass=c("C17","C20","C21"),
+                           grupos=5,sinicio=1234,repe=5)
+ medias9$modelo="Log19"
+ 
+ medias10<-cruzadalogistica(data=senbis,vardep="gana",
+                           listconti=c("P30","P32","P33"),
+                           listclass=c("C16","C17","C25"),
+                           grupos=5,sinicio=1234,repe=5)
+ medias10$modelo="Log20"
+
+ reglog1<-rbind(rlog1,rlog2,rlog3,rlog4,rlog5,rlog6,rlog7,rlog8,rlog9,rlog10,medias1,medias2,medias3,medias4,medias5,medias6,medias7,medias8,medias9,medias10)
+
+ 
+ par(cex.axis=1.0)
+ boxplot(data=reglog1,tasa~modelo,main="TASA FALLOS")
+ boxplot(data=reglog1,auc~modelo,main="AUC")
+
+
+*******************************************************************************************************
+**********************************************   REDES   **********************************************
+ 
+ red1<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P30","P32","P33"),
+                        listclass=c("C21","C24","C27"),
+                        grupos=5,sinicio=23461,repe=10,size=c(6),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red1$modelo="Red1"
+ 
+ red2<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P32","P30","P33"),
+                        listclass=c("C28","C25"),
+                        grupos=5,sinicio=23461,repe=10,size=c(5),decay=c(0.001),repeticiones=5,itera=200)
+ 
+ red2$modelo="Red2"
+ 
+ red3<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P30","P32","P33"),
+                        listclass=c("C25","C27","C29"),
+                        grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red3$modelo="Red3"
+ 
+ red33<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P30","P32","P33"),
+                        listclass=c("C25","C27","C29"),
+                        grupos=5,sinicio=23461,repe=10,size=c(6),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red33$modelo="Red3.1"
+ 
+ red4<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P30","P32","P33"),
+                        listclass=c("C27","C29"),
+                        grupos=5,sinicio=23461,repe=10,size=c(4),decay=c(0.01),repeticiones=5,itera=200)
+ 
+ red4$modelo="Red4"
+ 
+ red5<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P30","P32","P33"),
+                        listclass=c("C25","C28"),
+                        grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.01),repeticiones=5,itera=200)
+ 
+ red5$modelo="Red5"
+ 
+ red_6<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P30","P31","P32","P33"),
+                        listclass=c("C17","C28"),
+                        grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red_6$modelo="Red_6"
+ 
+ red66<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P30","P31","P32","P33"),
+                        listclass=c("C17","C28"),
+                        grupos=5,sinicio=23461,repe=10,size=c(5),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red66$modelo="Red6.1"
+ 
+ red7<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P8","P9","P30","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,size=c(8),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red7$modelo="Red7"
+ 
+ red8<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                        listconti=c("P3","P12","P9","P30","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,size=c(5),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red8$modelo="Red8"
+ 
+ red9<-cruzadaavnnetbin(data=sencbis,vardep="gana",
+                        listconti=c("P5","P12","P30","P32","P33"),
+                        listclass=c(""),
+                        grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.01),repeticiones=5,itera=200)
+ 
+ red9$modelo="Red9"
+ 
+ red10<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P6","P7","P8","P12","P30","P32","P33"),
+                         listclass=c("C24","C17","C29","C25"),
+                         grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red10$modelo="Red10"
+ 
+ red11<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C27"),
+                         grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.01),repeticiones=5,itera=200)
+ 
+ red11$modelo="Red11"
+ 
+ red12<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P8","P30","P32","P33"),
+                         listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.01),repeticiones=5,itera=200)
+ 
+ red12$modelo="Red12"
+ 
+ red13<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C25","C27","C29"),
+                         grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.001),repeticiones=5,itera=200)
+ 
+ red13$modelo="Red13"
+
+ red14<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P4","P5","P8","P11","P12","P30","P31","P32","P33"),
+                         listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red14$modelo="Red14"
+ 
+ red15<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C16","C17","C28","C16","C25","C27"),
+                         grupos=5,sinicio=23461,repe=10,size=c(3),decay=c(0.001),repeticiones=5,itera=200)
+ 
+ red15$modelo="Red15"
+ 
+ red16<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P31","P32","P33"),
+                         listclass=c("C17","C28"),
+                         grupos=3,sinicio=23461,repe=10,size=c(3),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red16$modelo="Red16"
+ 
+ red161<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P31","P32","P33"),
+                         listclass=c("C17","C28"),
+                         grupos=3,sinicio=23461,repe=10,size=c(6),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red161$modelo="Red16.1"
+ 
+ red162<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                          listconti=c("P30","P31","P32","P33"),
+                          listclass=c("C17","C28"),
+                          grupos=3,sinicio=23461,repe=10,size=c(6),decay=c(0.1),repeticiones=50,itera=200)
+ 
+ red162$modelo="Red16.2"
+ 
+ red17<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P8","P9","P30","P32","P33"),
+                         listclass=c(""),
+                         grupos=5,sinicio=23461,repe=10,size=c(7),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red17$modelo="Red17"
+ 
+ red18<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C16","C17","C28","C27"),
+                         grupos=5,sinicio=23461,repe=10,size=c(5),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red18$modelo="Red18"
+ 
+ red181<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C16","C17","C28","C27"),
+                         grupos=5,sinicio=23461,repe=10,size=c(7),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red181$modelo="Red18.1"
+ 
+ red19<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P19","P30","P32","P33"),
+                         listclass=c("C17","C20","C21"),
+                         grupos=5,sinicio=23461,repe=10,size=c(4),decay=c(0.1),repeticiones=5,itera=200)
+ 
+ red19$modelo="Red19"
+ 
+ red20<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C16","C17","C25"),
+                         grupos=4,sinicio=23461,repe=10,size=c(3),decay=c(0.001),repeticiones=5,itera=200)
+ 
+ red20$modelo="Red20"
+ 
+ red201<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                         listconti=c("P30","P32","P33"),
+                         listclass=c("C16","C17","C25"),
+                         grupos=4,sinicio=23461,repe=10,size=c(3),decay=c(0.001),repeticiones=5,itera=200)
+ 
+ red201$modelo="Red20.1"
+ 
+ red21<-cruzadaavnnetbin(data=senbis,vardep="gana",
+                          listconti=c("P30","P31","P32","P33","P4","P8"),
+                          listclass=c(""),
+                          grupos=4,sinicio=23461,repe=10,size=c(4),decay=c(0.001),repeticiones=5,itera=200)
+ 
+ red21$modelo="Red21"
+
+  unionred<-rbind(red1,red2,red3,red4,red5,red7,red8,red9,red10,red11,red12,red13,red14,red15,red16,red17,red18,red19,red20)
+    
+  unionred<-rbind(red3,red6,red10,red14,red16,red18,red20)
+  unionred<-rbind(red3,red33,red_6,red66,red10,red14,red161,red162,red181,red201,red14,red16,red18,red20,red21)
+  
+  unionred<-rbind(red3,red8,red9,red10,red11,red14,red20)
+                   6    6    5     11    4           6
+  
+  par(cex.axis=1.0)
+  boxplot(data=unionred,tasa~modelo,main="TASA FALLOS")
+  boxplot(data=unionred,auc~modelo,main="AUC") 
+
+*******************************************************************************************************************************
+
