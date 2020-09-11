@@ -1,0 +1,44 @@
+
+
+ods output type3=parametros;
+proc logistic data=tfm.base namelen=20 descending ;
+class C13	C14	C15	C16	C17	C18	C20	C21	C22	C23	C24	C25	C27	C28	C29;
+model gana=P1 P3 P4 P5	P6	P7	P8	P9	P10	P11	P12	P19	P26	P30	P31	P32	P33 C13	C14	C15	C16	C17	C18	C20	C21	C22	C23	C24	C25	C27	C28	C29
+/selection=stepwise;
+run;quit;
+data mode;length effect $20. modelo $ 20000;retain modelo " ";set parametros end=fin;effect=cat(' ',effect);
+if _n_ ne 1 then modelo=catt(modelo,' ',effect);if fin then output;
+run;
+data ;set mode;put modelo;run;
+
+
+
+/* Selección de variables */
+
+%randomselectlog(data=tfm.base,
+listclass= C13	C14	C15	C16	C17	C18	C20	C21	C22	C23	C24	C25	C27	C28	C29,
+vardepen=gana,
+modelo= P1 P3 P4 P5	P6	P7	P8	P9	P10	P11	P12	P19	P26	P30	P31	P32	P33 C13	C14	C15	C16	C17	C18	C20	C21	C22	C23	C24	C25	C27	C28	C29,
+sinicio=23451,sfinal=23471,fracciontrain=0.7);
+
+
+
+
+/*Análisis Factorial sin correlada*/
+
+PROC FACTOR DATA=ana.base1 CORR OUTSTAT=ana.af out=PROEJ1F COV
+RESIDUALS SCORE NFACT=3 MSA PLOTS=ALL;
+VAR DESPLA_E--GANADOR_;
+RUN;
+
+/*Análisis Factorial estandarizada rotada*/
+PROC FACTOR DATA=ana.base1 CORR OUTSTAT=ana.af out=PROEJ1F COV
+RESIDUALS SCORE NFACT=4 MSA SCREE ROTATE=VARIMAX PLOTS=ALL;
+VAR CENSO_EL--G_DEPART;
+RUN;
+
+/*Análisis Factorial estandarizada sin correladas*/
+PROC FACTOR DATA=ana.base1 CORR OUTSTAT=ana.af out=PROEJ1F COV
+RESIDUALS SCORE NFACT=4 MSA SCREE ROTATE=VARIMAX PLOTS=ALL;
+VAR DESPLA_E ABSTENCI COBERTUR--G_DEPART;
+RUN;
